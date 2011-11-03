@@ -170,7 +170,7 @@ class boss_temple_guardian_anhuur : public CreatureScript
 
 				GameObject* Door = me->FindNearestGameObject(GO_ANHUUR_BRIDGE_WALL, 200);
 				if (Door)
-					Door->SetGoState(GO_STATE_ACTIVE);
+					Door->RemoveFromWorld();
             }
 
             void SummonedCreatureDespawn(Creature* summon)
@@ -190,6 +190,7 @@ class boss_temple_guardian_anhuur : public CreatureScript
                 if (pInstance)
                     pInstance->SetData(DATA_TEMPLE_GUARDIAN_ANHUUR_EVENT, IN_PROGRESS);
 
+				me->SummonGameObject(GO_ANHUUR_BRIDGE_WALL, -641.39f, 304.37f, 52.9975f, 3.15858f, 0, 0, 0.999964f, -0.00849289f, 0);
                 DoZoneInCombat();
             }
 

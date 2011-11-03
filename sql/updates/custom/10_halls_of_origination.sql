@@ -109,9 +109,8 @@ REPLACE INTO game_graveyard_zone VALUES (1823, 4945,0);
 UPDATE creature SET spawntimesecs=3600 WHERE map=644;
 -- Spawn GOBs
 UPDATE gameobject_template SET type = 0 WHERE entry = 402333;
-DELETE FROM gameobject WHERE map=644 AND id IN (206506, 202309, 202314, 202307);
+DELETE FROM gameobject WHERE map=644 AND id IN (206506, 202309, 202314, 202307, 402333);
 INSERT INTO `gameobject` (`id`, `map`, `spawnMask`, `phaseMask`, `position_x`, `position_y`, `position_z`, `orientation`, `rotation0`, `rotation1`, `rotation2`, `rotation3`, `spawntimesecs`, `animprogress`, `state`) VALUES('206506','644','3','1','-641.39','304.37','52.9975','3.15858','0','0','0.999964','-0.00849289','300','0','1');
-INSERT INTO `gameobject` (`id`, `map`, `spawnMask`, `phaseMask`, `position_x`, `position_y`, `position_z`, `orientation`, `rotation0`, `rotation1`, `rotation2`, `rotation3`, `spawntimesecs`, `animprogress`, `state`) VALUES('402333','644','3','1','-641.39','304.37','52.9975','3.15858','0','0','0.999964','-0.00849289','300','0','1');
 INSERT INTO `gameobject` (`id`, `map`, `spawnMask`, `phaseMask`, `position_x`, `position_y`, `position_z`, `orientation`, `rotation0`, `rotation1`, `rotation2`, `rotation3`, `spawntimesecs`, `animprogress`, `state`) VALUES('202309','644','3','1','-439.397','366.874','89.7929','3.13816','0','0','0.999999','0.00171597','300','0','1');
 INSERT INTO `gameobject` (`id`, `map`, `spawnMask`, `phaseMask`, `position_x`, `position_y`, `position_z`, `orientation`, `rotation0`, `rotation1`, `rotation2`, `rotation3`, `spawntimesecs`, `animprogress`, `state`) VALUES('202314','644','3','1','-121.47','365.601','89.7908','6.27268','0','0','0.00525344','-0.999986','300','0','1');
 INSERT INTO `gameobject` (`id`, `map`, `spawnMask`, `phaseMask`, `position_x`, `position_y`, `position_z`, `orientation`, `rotation0`, `rotation1`, `rotation2`, `rotation3`, `spawntimesecs`, `animprogress`, `state`) VALUES('202307','644','3','1','-640.567','235.521','83.7956','1.49378','0','0','0.679362','0.733804','300','0','1');
