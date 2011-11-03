@@ -4,7 +4,6 @@ Todolist (edit if done. name of the woorking dev after the quest)
 -Merge Skyfire if updates are aviable [Dreadii]
 -Rewrite Base scripts by Asardial. (GrimBatol, Halls of Origins, Lost City of the TolVir, Vortex Pinnacle, Throne of the Tides, Blackwing Descent) [Dreadii]
 -add instance scripts and event to cataclysm dungeons
--Add working currency drop system
 -More work on Gilneas
 -More work on Kezan
 -add LFG datas to dungeon finder
@@ -40,6 +39,7 @@ Todolist (edit if done. name of the woorking dev after the quest)
 
 
 ---------------------------[Already Done]
+-implement currency drop system ( note: you need to rewrite the scripts to BossAI instead of creatireAI)
 -implement running wild
 -add pvp currency system (need still work)
 -implement chakra talent of priest
