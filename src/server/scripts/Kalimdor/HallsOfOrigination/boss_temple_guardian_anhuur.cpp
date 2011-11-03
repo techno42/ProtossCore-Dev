@@ -31,6 +31,7 @@ enum
 {
 	NPC_PIT_SNAKE = 39444,
 	GO_ANHUUR_BRIDGE = 206506,
+	GO_ANHUUR_BRIDGE_WALL = 402333,
 };
 
 const Position aSpawnLocations[21] =
@@ -166,6 +167,10 @@ class boss_temple_guardian_anhuur : public CreatureScript
                 GameObject* Bridge = me->FindNearestGameObject(GO_ANHUUR_BRIDGE, 200);
                 if (Bridge)
                     Bridge->SetGoState(GO_STATE_ACTIVE);
+
+				GameObject* Door = me->FindNearestGameObject(GO_ANHUUR_BRIDGE_WALL, 200);
+				if (Door)
+					Door->SetGoState(GO_STATE_ACTIVE);
             }
 
             void SummonedCreatureDespawn(Creature* summon)
