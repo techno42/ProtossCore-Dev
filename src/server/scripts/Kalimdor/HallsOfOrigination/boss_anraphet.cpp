@@ -1,29 +1,27 @@
-/*
-* Copyright (C) 2011 True Blood <http://www.trueblood-servers.com/>
-* By Asardial
-*/
-
 #include "ScriptPCH.h"
 #include "ScriptMgr.h"
 #include "ScriptedCreature.h"
 #include "SpellScript.h"
 #include "SpellAuraEffects.h"
 
-#define SPELL_ALPHA_BEAMS 39788
-#define H_SPELL_ALPHA_BEAMS 39788
-#define SPELL_CRUMBLING_RUIN 75609
-#define H_SPELL_CRUMBLING_RUIN 91206
-#define SPELL_DESTRUCTION_PROTOCOL 77437
-#define SPELL_NEMESIS_STRIKE 75604
-#define H_SPELL_NEMESIS_STRIKE 91175
-#define SPELL_OMEGA_STANCE 75622
-#define H_SPELL_OMEGA_STANCE 91208
+enum Spells
+{
+    SPELL_ALPHA_BEAMS                       = 91210,
+    H_SPELL_ALPHA_BEAMS                     = 91210,
+    SPELL_CRUMBLING_RUIN                    = 75609,
+    H_SPELL_CRUMBLING_RUIN                  = 91206,
+    SPELL_DESTRUCTION_PROTOCOL              = 77437,
+    SPELL_NEMESIS_STRIKE                    = 75604,
+    H_SPELL_NEMESIS_STRIKE                  = 91175,
+    SPELL_OMEGA_STANCE                      = 75622,
+    H_SPELL_OMEGA_STANCE                    = 91208,
+};
 
 enum Texts
 {
 	SAY_INTRO = 0,
     SAY_AGGRO = 1,
-    SAY_SLAY = 2,
+    SAY_SLAY =  2,
     SAY_EVENT = 3,
     SAY_DEATH = 4,
 };
