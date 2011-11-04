@@ -260,3 +260,16 @@ INSERT INTO `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `l
 ('48815','56434','0','2','2','1','1'),
 ('48815','56435','0','2','2','1','1'),
 ('48815','56436','0','2','2','1','1');
+
+
+DELETE FROM gameobject_template WHERE entry =207547;
+INSERT INTO `gameobject_template` (`entry`, `type`, `displayId`, `name`, `flags`) VALUES
+('207547','11','9052','Lift of the Makers', 40);
+
+DELETE FROM gameobject WHERE id=207547;
+
+DELETE FROM gameobject WHERE id IN (192570, 192571)  AND map=1;
+INSERT INTO `gameobject` (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `position_x`, `position_y`, `position_z`, `orientation`, `rotation0`, `rotation1`, `rotation2`, `rotation3`, `spawntimesecs`, `animprogress`, `state`) VALUES
+('4002861','192571','1','1','1','-10211','-1837.83','20.1281','6.25565','0','0','0.0137672','-0.999905','3600','100','1');
+INSERT INTO `gameobject` (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `position_x`, `position_y`, `position_z`, `orientation`, `rotation0`, `rotation1`, `rotation2`, `rotation3`, `spawntimesecs`, `animprogress`, `state`) VALUES
+('4002889','192570','1','1','1','-10211','-1837.83','20.1281','6.25565','0','0','0.0137672','-0.999905','3600','100','1');
