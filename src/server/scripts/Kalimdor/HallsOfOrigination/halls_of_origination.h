@@ -70,6 +70,8 @@ enum CreatureIds
     // Various NPCs
 
     NPC_BRANN_BRONZEBEARD       = 49941,
+    MOB_HORROR                  = 40810,
+    MOB_SCARAB                  = 40458,
 };
 
 #endif

@@ -1,27 +1,17 @@
-/*
-* Copyright (C) 2011 True Blood <http://www.trueblood-servers.com/>
-* By Asardial
-*/
-
 #include "ScriptPCH.h"
 #include "WorldPacket.h"
 #include "ScriptMgr.h"
 #include "ScriptedCreature.h"
 #include "SpellScript.h"
 #include "SpellAuraEffects.h"
+#include "halls_of_origination.h"
 
-enum Texts
+enum ScriptTexts
 {
-    SAY_AGGRO = 0,
-    SAY_DEATH = 1,
-    SAY_EVENT = 2,
-};
-
-enum CreatureIds
-{
-    BOSS_EARTHRAGER_PTAH        = 39428,
-    MOB_HORROR                  = 40810,
-	MOB_SCARAB                  = 40458,
+    SAY_AGGRO                   = -1643019,
+    SAY_DEATH                   = -1643020,
+    SAY_SLAY_1                  = -1643021,
+    SAY_SLAY_2                  = -1643022,
 };
 
 enum Spells
@@ -71,17 +61,36 @@ class boss_earthrager_ptah : public CreatureScript
 			InstanceScript* pInstance;
             EventMap events;
 			SummonList Summons;
+			bool check_in;
+
+            void Reset()
+            {
+                events.Reset();
+
+                if (pInstance && (pInstance->GetData(DATA_EARTHRAGER_PTAH_EVENT) != DONE && !check_in))
+                   pInstance->SetData(DATA_EARTHRAGER_PTAH_EVENT, NOT_STARTED);
+                check_in = false;
+            }
 
 			void EnterCombat(Unit * /*who*/)
 			{
 				EnterPhaseGround();
-				Talk(SAY_AGGRO);
+				DoScriptText(SAY_AGGRO, me);
+				if (pInstance)
+                    pInstance->SetData(DATA_EARTHRAGER_PTAH_EVENT, IN_PROGRESS);
 			}
 			
 			void JustDied(Unit* /*killer*/)
 			{
-				Talk(SAY_DEATH);
+				DoScriptText(SAY_DEATH, me);
 				Summons.DespawnAll();
+                if (pInstance)
+                    pInstance->SetData(DATA_EARTHRAGER_PTAH_EVENT, DONE);
+			}
+
+			void KilledUnit(Unit* /*Killed*/)
+			{
+				DoScriptText(SAY_SLAY_1, me);
 			}
 			
 			void JustSummoned(Creature *pSummoned)
@@ -119,17 +128,18 @@ class boss_earthrager_ptah : public CreatureScript
 					{
 						switch(eventId)
 						{
-							case EVENT_FLAME_BOLT:
-                                DoCast(me->getVictim(), SPELL_FLAME_BOLT);
-								events.ScheduleEvent(EVENT_FLAME_BOLT, 7500);
+                        case EVENT_FLAME_BOLT:
+                            if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, true))
+                                DoCast(target, SPELL_FLAME_BOLT);
+                                events.ScheduleEvent(EVENT_FLAME_BOLT, 7500);
 								return;
 							case EVENT_RAGING_SMASH:
 								DoCast(me->getVictim(), SPELL_RAGING_SMASH);
 								events.ScheduleEvent(EVENT_RAGING_SMASH, urand(4000, 10000));
 								return;
 							case EVENT_EARTH_POINT:
-								Talk(SAY_EVENT);
-								if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM,1,-10.0f,true)) // Personne au cac de toucher
+								DoScriptText(SAY_SLAY_2, me);
+								if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM,1,10.0f,true)) 
 								DoCast(target, SPELL_EARTH_POINT);
 								events.ScheduleEvent(EVENT_EARTH_POINT, 8000);
 								return;
