@@ -36,6 +36,9 @@ enum
 	GO_ANHUUR_BRIDGE_WALL                       = 402333,
 };
 
+const float centerPos[4] =
+    {-640.527f, 334.855f, 78.345f, 1.54f};
+
 const Position aSpawnLocations[21] =
 {
     {-654.277f, 361.118f, 52.9508f, 5.86241f},
@@ -135,7 +138,7 @@ class boss_temple_guardian_anhuur : public CreatureScript
 
             void ChangePhase()
             {
-                DoTeleportTo(-640.527f, 334.855f, 78.345f, 1.54f);
+                DoTeleportTo(centerPos);
                 me->SetOrientation(1.54f);
                 for(uint32 x = 0; x<21; ++x)
                    me->SummonCreature(NPC_PIT_SNAKE, aSpawnLocations[x].GetPositionX(), aSpawnLocations[x].GetPositionY(), aSpawnLocations[x].GetPositionZ(), 0.0f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 3000);
