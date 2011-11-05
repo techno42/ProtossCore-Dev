@@ -1,5 +1,10 @@
-#include"ScriptPCH.h"
-#include"halls_of_origination.h"
+#include "ScriptPCH.h"
+#include "halls_of_origination.h"
+#include "WorldPacket.h"
+#include "ScriptMgr.h"
+#include "ScriptedCreature.h"
+#include "SpellScript.h"
+#include "SpellAuraEffects.h"
 
 enum ScriptTexts
 {
@@ -98,6 +103,7 @@ class boss_temple_guardian_anhuur : public CreatureScript
             uint8 PhaseCount;
             uint8 FlameCount;
 
+			uint32 HymnTimer;
 			uint32 IHateThisSongTimer;
             uint32 DivineReckoningTimer;
             uint32 SearingFlameTimer;
@@ -110,6 +116,7 @@ class boss_temple_guardian_anhuur : public CreatureScript
                 Phase = PHASE_NORMAL;
                 PhaseCount = 0;
                 FlameCount = 2;
+				HymnTimer = 1000;
                 DivineReckoningTimer = 8000;
                 SearingFlameTimer = 5000;
                 RemoveSummons();
@@ -143,13 +150,12 @@ class boss_temple_guardian_anhuur : public CreatureScript
                 for(uint32 x = 0; x<21; ++x)
                    me->SummonCreature(NPC_PIT_SNAKE, aSpawnLocations[x].GetPositionX(), aSpawnLocations[x].GetPositionY(), aSpawnLocations[x].GetPositionZ(), 0.0f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 3000);
 
-                DoCast(me, SPELL_SHIELD_OF_LIGHT);
-                DoCast(me, SPELL_REVERBERATING_HYMN);
                 Talk(SAY_BEACON);
                 Talk(SAY_ANNOUNCE);
                 PhaseCount++;
                 Phase = PHASE_SHIELD;
-                me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_INTERRUPT, true);
+				DoCast(me, SPELL_SHIELD_OF_LIGHT);
+                me->ApplySpellImmune(74938, IMMUNITY_MECHANIC, MECHANIC_INTERRUPT, true);
 
                 if (Creature *light1 = me->SummonCreature(40183, -603.465f, 334.38f, 65.4f, 3.12f,TEMPSUMMON_CORPSE_DESPAWN, 1000))
                     light1->CastSpell(me, SPELL_BEAM_LEFT, false);
@@ -210,6 +216,19 @@ class boss_temple_guardian_anhuur : public CreatureScript
                 {
                     ChangePhase();
                 }
+
+				switch (Phase)
+				{
+				    case PHASE_SHIELD:
+					{
+						if (HymnTimer <= diff)
+						{
+							me->SetStandState(UNIT_STAND_STATE_STAND);
+							DoCast(me, SPELL_REVERBERATING_HYMN, true );
+							HymnTimer = 170001;
+						} else HymnTimer -= diff;
+					}
+				}
 
                 if (Phase == PHASE_SHIELD && FlameCount == 0)
                 {
@@ -286,7 +305,7 @@ public:
 };
 
 /********************
-** Pilier de lumière
+** light beacon
 *********************/
 class go_beacon_of_light : public GameObjectScript
 {
@@ -295,8 +314,6 @@ public:
 
     bool OnGossipHello(Player* pPlayer, GameObject* pGO)
     {
-        pPlayer->CastSpell(pGO, 68398, false);
-
         if (Creature* beam = pGO->FindNearestCreature(40183, 14.0f, true))
             beam->Kill(beam);
 
