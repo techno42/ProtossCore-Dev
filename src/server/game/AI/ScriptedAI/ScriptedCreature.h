@@ -28,6 +28,7 @@
 #include "CreatureAIImpl.h"
 #include "InstanceScript.h"
 
+#define MAX_AGGRO_PULSE_TIMER            5000
 #define SCRIPT_CAST_TYPE dynamic_cast
 
 #define CAST_PLR(a)     (SCRIPT_CAST_TYPE<Player*>(a))
@@ -250,6 +251,12 @@ struct ScriptedAI : public CreatureAI
         return heroic25;
     }
 
+	void SetImmuneToPushPullEffects(bool set)
+	{
+		me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, set);
+		me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, set);
+	}
+
     private:
         bool m_bCombatMovement;
         uint32 m_uiEvadeCheckCooldown;
@@ -260,7 +267,11 @@ struct ScriptedAI : public CreatureAI
 
 struct Scripted_NoMovementAI : public ScriptedAI
 {
-    Scripted_NoMovementAI(Creature* creature) : ScriptedAI(creature) {}
+    Scripted_NoMovementAI(Creature* creature) : ScriptedAI(creature)
+  {
+		SetImmuneToPushPullEffects(true);
+  }
+
     virtual ~Scripted_NoMovementAI() {}
 
     //Called at each attack of me by any victim
@@ -273,6 +284,7 @@ struct BossAI : public ScriptedAI
     virtual ~BossAI() {}
 
     const uint32 bossId;
+	uint32 inFightAggroCheck_Timer;
     EventMap events;
     SummonList summons;
     InstanceScript * const instance;
@@ -293,6 +305,7 @@ struct BossAI : public ScriptedAI
         void _EnterCombat();
         void _JustDied();
         void _JustReachedHome() { me->setActive(false); }
+		void _DoAggroPulse(const uint32 diff);
 
         bool CheckInRoom()
         {

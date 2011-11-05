@@ -42,6 +42,9 @@
 #include "WorldSession.h"
 #include "Group.h"
 
+// for template
+#include "SpellMgr.h"
+
 #include<string>
 #include<vector>
 
@@ -2564,6 +2567,7 @@ class Player : public Unit, public GridObject<Player>
         AchievementMgr const& GetAchievementMgr() const { return m_achievementMgr; }
         void UpdateAchievementCriteria(AchievementCriteriaTypes type, uint32 miscvalue1 = 0, uint32 miscvalue2 = 0, Unit *unit = NULL, uint32 time = 0);
         void CompletedAchievement(AchievementEntry const* entry, bool ignoreGMAllowAchievementConfig = false);
+		bool HasAchieved(uint32 entry);
 
         bool HasTitle(uint32 bitIndex);
         bool HasTitle(CharTitlesEntry const* title) { return HasTitle(title->bit_index); }
