@@ -1,39 +1,39 @@
-/*
-* Copyright (C) 2011 True Blood <http://www.trueblood-servers.com/>
-* By Asardial
-*/
-
 #include"ScriptPCH.h"
 #include"halls_of_origination.h"
 
 enum ScriptTexts
 {
-    SAY_AGGRO = 0,
-    SAY_BEACON = 1,
-    SAY_KILL_1 = 2,
-    SAY_KILL_2 = 3,
-    SAY_DEATH = 4,
-    SAY_ANNOUNCE = 5,
+    SAY_AGGRO                                   = 0,
+    SAY_BEACON                                  = 1,
+    SAY_KILL_1                                  = 2,
+    SAY_KILL_2                                  = 3,
+    SAY_DEATH                                   = 4,
+    SAY_ANNOUNCE                                = 5,
+};
+
+enum Achievement
+{
+    ACHIEVE_I_HATE_THIS_SONG                    = 5293,
 };
 
 enum Spells
 {
-    SPELL_DIVINE_RECKONING = 75592,
-	SPELL_DEVINE_RECKONING_H = 94949,
-    SPELL_REVERBERATING_HYMN = 75323,
-	SPELL_REVERBERATING_HYMN_H = 90008,
-    SPELL_SHIELD_OF_LIGHT = 74938,
-    SPELL_SEARING_FLAME_SUMM = 75117,
+    SPELL_DIVINE_RECKONING                      = 75592,
+	SPELL_DEVINE_RECKONING_H                    = 94949,
+    SPELL_REVERBERATING_HYMN                    = 75323,
+	SPELL_REVERBERATING_HYMN_H                  = 90008,
+    SPELL_SHIELD_OF_LIGHT                       = 74938,
+    SPELL_SEARING_FLAME_SUMM                    = 75117,
     // Lever beams.
-    SPELL_BEAM_LEFT = 83697, // Object 203133
-    SPELL_BEAM_RIGHT = 83698, // Object 203136
+    SPELL_BEAM_LEFT                             = 83697, // Object 203133
+    SPELL_BEAM_RIGHT                            = 83698, // Object 203136
 };
 
 enum
 {
-	NPC_PIT_SNAKE = 39444,
-	GO_ANHUUR_BRIDGE = 206506,
-	GO_ANHUUR_BRIDGE_WALL = 402333,
+	NPC_PIT_SNAKE                               = 39444,
+	GO_ANHUUR_BRIDGE                            = 206506,
+	GO_ANHUUR_BRIDGE_WALL                       = 402333,
 };
 
 const Position aSpawnLocations[21] =
@@ -95,6 +95,7 @@ class boss_temple_guardian_anhuur : public CreatureScript
             uint8 PhaseCount;
             uint8 FlameCount;
 
+			uint32 IHateThisSongTimer;
             uint32 DivineReckoningTimer;
             uint32 SearingFlameTimer;
 
@@ -239,7 +240,7 @@ class boss_temple_guardian_anhuur : public CreatureScript
 };
 
 /********************
-** Vipère de la Fosse
+** vider script
 *********************/
 #define spell_crochet 74538
 class mob_viper: public CreatureScript
