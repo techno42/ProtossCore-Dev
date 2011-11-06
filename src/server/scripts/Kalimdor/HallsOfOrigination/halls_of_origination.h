@@ -79,6 +79,7 @@ enum CreatureIds
     NPC_BRANN_BRONZEBEARD       = 49941,
     MOB_HORROR                  = 40810, //need correct id
     MOB_SCARAB                  = 40458, //need correct id
+    MOB_LIGHT                   = 0, //anhuur add summon for ray light balls
 };
 
 #endif
