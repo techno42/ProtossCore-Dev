@@ -6120,10 +6120,10 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
                 }
 				case 33763:
 					if (target->HasAura(92363, GetCasterGUID())) // Get talent Malfurion's gift rank 1
-						if (roll_chance_i(2)) // Procs only 2% of the time
+						if (roll_chance_i(50)) // Procs only 2% of the time
 							target->CastSpell(caster, 16870, true, NULL, this); // Clearcasting
 					if (target->HasAura(92364, GetCasterGUID())) // Get talent Malfurion's gift rank 2
-						if (roll_chance_i(4)) // Procs only 4% of the time
+						if (roll_chance_i(100)) // Procs only 4% of the time
 							target->CastSpell(caster, 16870, true, NULL, this); // Clearcasting
 				break;
                 case 39850:                                     // Rocket Blast

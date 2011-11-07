@@ -25,8 +25,6 @@ enum Spells
 {
     SPELL_DIVINE_RECKONING                      = 75592,
 	SPELL_DEVINE_RECKONING_H                    = 94949,
-    SPELL_REVERBERATING_HYMN                    = 75323,
-	SPELL_REVERBERATING_HYMN_H                  = 90008,
     SPELL_SHIELD_OF_LIGHT                       = 74938,
     SPELL_SEARING_FLAME_SUMM                    = 75117,
     // Lever beams.
@@ -36,10 +34,9 @@ enum Spells
 
 enum
 {
-    MOB_HMYN_CASTER                             = 1,
-    MOB_VIPER                                   = 39444,
-    GO_ANHUUR_BRIDGE                            = 206506,
-    GO_ANHUUR_BRIDGE_WALL                       = 402333,
+	NPC_PIT_SNAKE                               = 39444,
+	GO_ANHUUR_BRIDGE                            = 206506,
+	GO_ANHUUR_BRIDGE_WALL                       = 402333,
 };
 
 const float centerPos[4] =
@@ -117,11 +114,12 @@ class boss_temple_guardian_anhuur : public CreatureScript
                 Phase = PHASE_NORMAL;
                 PhaseCount = 0;
                 FlameCount = 2;
+				HymnTimer = 1000;
                 DivineReckoningTimer = 8000;
                 SearingFlameTimer = 5000;
                 RemoveSummons();
                 me->RemoveAurasDueToSpell(SPELL_SHIELD_OF_LIGHT);
-                me->RemoveAurasDueToSpell(SPELL_REVERBERATING_HYMN);
+                me->RemoveAurasDueToSpell(75322);
             }
 
             void RemoveSummons()
@@ -154,8 +152,8 @@ class boss_temple_guardian_anhuur : public CreatureScript
                 Talk(SAY_ANNOUNCE);
                 PhaseCount++;
                 Phase = PHASE_SHIELD;
-				DoCast(me, SPELL_SHIELD_OF_LIGHT, true);
-				DoCast(me, SPELL_REVERBERATING_HYMN, true );
+				DoCast(me, SPELL_SHIELD_OF_LIGHT);
+				DoCast(me, 75322);
 
                 if (Creature *light1 = me->SummonCreature(40183, -603.465f, 334.38f, 65.4f, 3.12f,TEMPSUMMON_CORPSE_DESPAWN, 1000))
                     light1->CastSpell(me, SPELL_BEAM_LEFT, false);
@@ -249,13 +247,13 @@ class boss_temple_guardian_anhuur : public CreatureScript
 };
 
 /********************
-** viper script
+** vider script
 *********************/
 #define spell_crochet 74538
 class mob_viper: public CreatureScript
 {
-    public: 
-        mob_viper() : CreatureScript("mob_viper") { } 
+public: 
+ mob_viper() : CreatureScript("mob_viper") { } 
 
  struct mob_viperAI : public ScriptedAI
     {
@@ -291,47 +289,6 @@ class mob_viper: public CreatureScript
 
 };
 
-/*tempfix for hymn*/
-#define spell_hymn 75323
-class mob_hymn_caster : public CreatureScript
-{
-    public:
-        mob_hymn_caster() : CreatureScripts("mob_hymn_caster") { }
-
-struct mob_hymn_casterAI : public ScriptedAI
-    {
-        mob_hymn_caster(Creature *c) : ScriptedAI(c) {}
-
-        uint32 HymnTimer,
-
-        void Reset()
-        {
-            HymnTimer = 100;
-        }
-
-		void UpdateAI(const uint32 diff)
-		{
-			if (!UpdateVictim())
-			return;
-
-			if(HymnTimer<=diff)
-			{
-				DoCast(me, spell_hymn, true);
-				HymnTimer = 180000;
-			} else HymTimer -=diff;
-
-			DoMeleeAttackIfReady();
-		}
-    };
-
-    CreatureAI* GetAI(Creature* pCreature) const
-	{
-		return new mob_hymn_casterAI (pCreature);
-	}
-};
-
-
-
 /********************
 ** light beacon
 *********************/
@@ -354,5 +311,4 @@ void AddSC_boss_temple_guardian_anhuur()
     new boss_temple_guardian_anhuur();
     new go_beacon_of_light();
 	new mob_viper();
-	new mob_hymn_caster();
 }
