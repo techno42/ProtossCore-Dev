@@ -597,6 +597,10 @@ void AddSC_instance_the_vortex_pinnacle();      //The Vortex Pinnacle
 void AddSC_instance_grim_batol();               //Grim Batol
 void AddSC_boss_general_umbriss();
 void AddSC_instance_throne_of_the_tides();      //Throne of the Tides
+void AddSC_boss_lady_nazjar();
+void AddSC_boss_commander_ulthok();
+void AddSC_boss_erunak_stonespeaker();
+void AddSC_boss_neptulon();
 void AddSC_instance_blackrock_caverns();        //Blackrock Caverns
 
 // battlegrounds
@@ -1235,6 +1239,10 @@ void AddNorthrendScripts()
     AddSC_instance_grim_batol();               //Grim Batol
     AddSC_boss_general_umbriss();
     AddSC_instance_throne_of_the_tides();      //Throne of the Tides
+    AddSC_boss_lady_nazjar();
+    AddSC_boss_commander_ulthok();
+    AddSC_boss_erunak_stonespeaker();
+    AddSC_boss_neptulon();
     AddSC_instance_blackrock_caverns();        //Blackrock Caverns
 
 #endif

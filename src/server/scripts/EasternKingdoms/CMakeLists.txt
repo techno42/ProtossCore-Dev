@@ -210,6 +210,10 @@ set(scripts_STAT_SRCS
   EasternKingdoms/GrimBatol/boss_general_umbriss.cpp
   EasternKingdoms/ThroneOfTheTides/throne_of_the_tides.h
   EasternKingdoms/ThroneOfTheTides/instance_throne_of_the_tides.cpp
+  EasternKingdoms/ThroneOfTheTides/boss_lady_nazjar.cpp
+  EasternKingdoms/ThroneOfTheTides/boss_commander_uthok.cpp
+  EasternKingdoms/ThroneOfTheTides/boss_erunak_stonespeaker.cpp
+  EasternKingdoms/ThroneOfTheTides/boss_neptulon.cpp
 )
 
 message("  -> Prepared: Eastern Kingdoms")

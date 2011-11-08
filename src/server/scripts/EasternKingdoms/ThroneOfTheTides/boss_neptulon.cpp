@@ -33,19 +33,19 @@ const Position spawns[] =
     {-118.400780f, 1014.799866f, 230.195724f, 4.366778f},
 };
 
-class npc_neptulon : public CreatureScript
+class boss_neptulon : public CreatureScript
 {
 public:
-    npc_neptulon() : CreatureScript("npc_neptulon") { }
+    boss_neptulon() : CreatureScript("boss_neptulon") { }
 
     CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new npc_neptulonAI (pCreature);
+        return new boss_neptulonAI (pCreature);
     }
 
-    struct npc_neptulonAI : public ScriptedAI
+    struct boss_neptulonAI : public ScriptedAI
     {
-        npc_neptulonAI(Creature *c) : ScriptedAI(c)
+        boss_neptulonAI(Creature *c) : ScriptedAI(c)
         {
             pInstance = c->GetInstanceScript();
             Neptulon = me;
@@ -258,8 +258,8 @@ public:
         pPlayer->PlayerTalkClass->ClearMenus();
         if (uiAction == 1000) //Start battle
         {
-            CAST_AI(npc_neptulon::npc_neptulonAI, pCreature->AI())->InProgress = true;
-            CAST_AI(npc_neptulon::npc_neptulonAI, pCreature->AI())->DoZoneInCombat();
+            CAST_AI(boss_neptulon::boss_neptulonAI, pCreature->AI())->InProgress = true;
+            CAST_AI(boss_neptulon::boss_neptulonAI, pCreature->AI())->DoZoneInCombat();
         }
         return true;
     }
@@ -310,8 +310,8 @@ public:
     };
 };
 
-void AddSC_neptulon()
+void AddSC_boss_neptulon()
 {
-    new npc_neptulon();
+    new boss_neptulon();
     new boss_ozumat();
 }
