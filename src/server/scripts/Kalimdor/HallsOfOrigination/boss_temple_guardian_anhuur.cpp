@@ -153,7 +153,7 @@ class boss_temple_guardian_anhuur : public CreatureScript
                 PhaseCount++;
                 Phase = PHASE_SHIELD;
 				DoCast(me, SPELL_SHIELD_OF_LIGHT);
-				DoCast(me, 75322);
+				me->AddAura(75322,me);
 
                 if (Creature *light1 = me->SummonCreature(40183, -603.465f, 334.38f, 65.4f, 3.12f,TEMPSUMMON_CORPSE_DESPAWN, 1000))
                     light1->CastSpell(me, SPELL_BEAM_LEFT, false);
