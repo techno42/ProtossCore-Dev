@@ -24,6 +24,7 @@ enum Spells
     SPELL_CONSUMING_DARKNESS   = 88954,
     SPELL_METEOR_SLASH         = 88942,
     SPELL_FEL_FIRESTORM        = 88972,
+    SPELL_FEL_FIRE_AURA        = 88999,
 };
 
 enum Events
@@ -31,6 +32,7 @@ enum Events
     EVENT_BERSERK = 1,
     EVENT_CONSUMING_DARKNESS,
     EVENT_METEOR_SLASH,
+    EVENT_FEL_FIRE_DAMAGE,
 };
 
 class boss_argaloth: public CreatureScript
@@ -105,7 +107,61 @@ class boss_argaloth: public CreatureScript
     }
 };
 
+class mob_fel_fire : public CreatureScript
+{
+        public:
+            mob_fel_fire() : CreatureScript("mob_fel_fire") { }
+
+        struct mob_fel_fireAI : public ScriptedAI
+        {
+            mob_fel_fireAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+
+            bool aura;
+            uint32 m_uiFelFireDamageTimer;
+
+            void Reset()
+            {
+                aura = false;
+                me->SetReactState(REACT_PASSIVE);
+                me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                //me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_SELECTABLE);
+                m_uiFelFireDamageTimer = 1000;
+            }
+
+            void UpdateAI(const uint32 uiDiff)
+            {
+                if (!aura)
+                {
+                    aura = true;
+                    DoCast(me, SPELL_FEL_FIRE_AURA);
+                }
+
+                if (m_uiFelFireDamageTimer <= uiDiff)
+                {
+                    Map* pMap = me->GetMap();
+                    Map::PlayerList const &PlayerList = pMap->GetPlayers();
+
+                    if (!PlayerList.isEmpty())
+                    {
+                        for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
+                        {
+                            if (Player* pPlayer = i->getSource())
+                            {
+                                if (me->GetDistance(pPlayer) < 3.0f)
+                                {
+                                    me->DealDamage(pPlayer, 12000, 0, SPELL_DIRECT_DAMAGE, SPELL_SCHOOL_MASK_FIRE, NULL, false);
+                                }
+                            }
+                        }
+                    }
+                    m_uiFelFireDamageTimer = 1000;
+                }
+            }
+        };
+};
+
 void AddSC_boss_argaloth()
 {
     new boss_argaloth();
+    new mob_fel_fire();
 }
