@@ -124,7 +124,7 @@ class mob_fel_fire : public CreatureScript
                 aura = false;
                 me->SetReactState(REACT_PASSIVE);
                 me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                //me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_SELECTABLE);
+                me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                 m_uiFelFireDamageTimer = 1000;
             }
 
